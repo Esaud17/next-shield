@@ -438,5 +438,5 @@ export type NextShieldProps<
    *   )
    * ```
    */
-  userRole: string | undefined
+  userRole: string[] | undefined
 }
