@@ -6,7 +6,7 @@ export type ComponentShieldBaseProps = HOC & { RBAC?: never; showIf?: never }
 export type ComponentShieldRBACProps = HOC & {
   RBAC: true
   showForRole: string
-  userRole: string | undefined
+  userRole: string[] | undefined
 }
 
 export type ComponentShieldAuthProps = HOC & {
@@ -17,7 +17,7 @@ export type ComponentShieldAuthProps = HOC & {
 
 export type ComponentShieldProps = HOC & {
   RBAC?: boolean
-  userRole?: string | undefined
+  userRole?: string[] | undefined
   showForRole?: string
   showIf?: boolean
   fallback?: ReactNode

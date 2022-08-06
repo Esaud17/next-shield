@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect } from 'react'
 
 import { NextShieldProps } from '../types/props'
-import { verifyPath, getAccessRoute } from '../libs/routes'
+import { verifyPath, getAccessRoute, getGrantedRoutes } from '../libs/routes'
 
 /**
  * 😉 The shield that every Next.js app needs
@@ -57,10 +57,10 @@ export function NextShield<
   const pathIsPrivate = verifyPath(privateRoutes, pathname)
   const pathIsPublic = verifyPath(publicRoutes, pathname)
   const pathIsHybrid = verifyPath(hybridRoutes, pathname)
-  const pathIsAuthorized =
-    RBAC && userRole && verifyPath(RBAC[userRole].grantedRoutes, pathname)
   const access = getAccessRoute(RBAC, userRole, accessRoute)
-
+  const grantedRoutes= getGrantedRoutes(RBAC, userRole, access)
+  const pathIsAuthorized = RBAC && userRole && verifyPath(grantedRoutes, pathname)
+  
   useEffect(() => {
     if (!isAuth && !isLoading && pathIsPrivate) replace(loginRoute)
     if (isAuth && !isLoading && pathIsPublic) replace(access)
