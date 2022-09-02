@@ -3,8 +3,8 @@ import type { NextRouter } from 'next/router'
 
 export type RoleAccess<Routes extends string[]> = {
   [index: string]: {
-    grantedRoutes: Routes,
-    accessRoute: Routes[number]
+    grantedRoutes?: Routes,
+    accessRoute?: Routes[number]
   }
 }
 
