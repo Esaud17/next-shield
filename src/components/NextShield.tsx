@@ -63,9 +63,9 @@ export function NextShield<
   
   useEffect(() => {
     if (!isAuth && !isLoading && pathIsPrivate) replace(loginRoute)
-    if (isAuth && !isLoading && pathIsPublic) replace(access)
+    if (isAuth && !isLoading && pathIsPublic) replace(access || '/')
     if (isAuth && userRole && !isLoading && !pathIsHybrid && !pathIsAuthorized)
-      replace(access)
+      replace(access || '/')
   }, [
     replace,
     userRole,
