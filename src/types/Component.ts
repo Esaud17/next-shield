@@ -1,7 +1,10 @@
 import { ReactNode } from 'react'
 import { HOC } from './common'
 
-export type ComponentShieldBaseProps = HOC & { RBAC?: never; showIf?: never }
+export type ComponentShieldBaseProps = HOC & { 
+  RBAC?: never; 
+  showIf?: never 
+}
 
 export type ComponentShieldRBACProps = HOC & {
   RBAC: true

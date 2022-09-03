@@ -1,26 +1,26 @@
 import { RoleAccess } from '../types/props'
 
 export function verifyPath(routes: string[] | undefined, uri: string) {
-  console.log("verifyPath", routes, uri)
+  if (routes === undefined || routes?.length == 0) return false;
   return routes?.some(route => route === uri)
 }
 
 export function getAccessRoute(
   RBAC: RoleAccess<string[]> | undefined,
   userRole: string[] | undefined,
-  accessRoute?: string | undefined
+  accessRoute?: string | undefined,
+  defaultAccessRoute?: string | undefined
 ) {
   if (typeof accessRoute !== 'undefined') return accessRoute
 
   if (RBAC && userRole) {
     for (const role of userRole) {
       if (RBAC[role] && RBAC[role].hasOwnProperty('accessRoute')) {
-        console.log('accessRoute', RBAC[role].accessRoute)
         return RBAC[role].accessRoute
       }
     }
   }
-  return '/'
+  return defaultAccessRoute
 }
 
 export function getGrantedRoutes(
@@ -28,9 +28,6 @@ export function getGrantedRoutes(
   userRole: string[] | undefined,
   accessRoute?: string | undefined
 ) {
-
-  
-
   let grantedRoutes: string[] = []
   if (RBAC && userRole) {
     for (const role of userRole) {
@@ -45,6 +42,5 @@ export function getGrantedRoutes(
       grantedRoutes.push(accessRoute)
     }
   }
-  console.log('grantedRoutes', grantedRoutes)
   return grantedRoutes
 }

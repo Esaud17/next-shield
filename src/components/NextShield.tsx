@@ -46,6 +46,7 @@ export function NextShield<
   router: { pathname, replace },
   loginRoute,
   accessRoute,
+  defaultRoute,
   privateRoutes,
   publicRoutes,
   hybridRoutes,
@@ -54,18 +55,23 @@ export function NextShield<
   userRole,
   children,
 }: NextShieldProps<PrivateRoutesList, PublicRoutesList> & { children: ReactNode }) {
+
+  debugger
+  
+  let view = (<>{children}</>);
+
   const pathIsPrivate = verifyPath(privateRoutes, pathname)
   const pathIsPublic = verifyPath(publicRoutes, pathname)
   const pathIsHybrid = verifyPath(hybridRoutes, pathname)
-  const access = getAccessRoute(RBAC, userRole, accessRoute)
+
+  const access = getAccessRoute(RBAC, userRole, accessRoute, defaultRoute)
   const grantedRoutes= getGrantedRoutes(RBAC, userRole, access)
   const pathIsAuthorized = RBAC && userRole && verifyPath(grantedRoutes, pathname)
   
   useEffect(() => {
     if (!isAuth && !isLoading && pathIsPrivate) replace(loginRoute)
-    if (isAuth && !isLoading && pathIsPublic) replace(access || '/')
-    if (isAuth && userRole && !isLoading && !pathIsHybrid && !pathIsAuthorized)
-      replace(access || '/')
+    if (isAuth && !isLoading && pathIsPublic) replace(access || defaultRoute)
+    if (isAuth && userRole && !isLoading && !pathIsHybrid && !pathIsAuthorized) replace(access || '/')
   }, [
     replace,
     userRole,
@@ -79,13 +85,19 @@ export function NextShield<
     pathIsAuthorized,
   ])
 
-  if (
-    ((isLoading || !isAuth) && pathIsPrivate) ||
-    ((isLoading || isAuth) && pathIsPublic) ||
-    ((isLoading || userRole) && !pathIsAuthorized && !pathIsHybrid) ||
-    (isLoading && pathIsHybrid)
-  )
-    return <>{LoadingComponent}</>
+  const loadingPathPrivate = ((isLoading || !isAuth) && pathIsPrivate);
+  const loadingPathPublic = ((isLoading || isAuth) && pathIsPublic);
+  const loadingPathAuthHybrid = ((isLoading || userRole) && !pathIsAuthorized && !pathIsHybrid);
+  const loadingPathHybrid = (isLoading && pathIsHybrid);
 
-  return <>{children}</>
+  if (
+    loadingPathPrivate ||
+    loadingPathPublic ||
+    loadingPathAuthHybrid ||
+    loadingPathHybrid
+  ) {
+    view = (<>{LoadingComponent}</>);
+  }
+
+  return view;
 }
