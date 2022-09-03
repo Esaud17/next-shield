@@ -56,8 +56,6 @@ export function NextShield<
   children,
 }: NextShieldProps<PrivateRoutesList, PublicRoutesList> & { children: ReactNode }) {
 
-  debugger
-  
   let view = (<>{children}</>);
 
   const pathIsPrivate = verifyPath(privateRoutes, pathname)
