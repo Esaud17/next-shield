@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -29,9 +29,9 @@
       "pre-commit": "tsdx lint"
     }
   },
-  "name": "next-shield",
-  "description": "The shield that every Next.js project needs.",
-  "author": "Jorge Acero",
+  "name": "next-shield-overlay",
+  "description": "fork multi role from Jorge Acero The shield that every Next.js project needs.",
+  "author": "Esaud Rivera",
   "module": "dist/next-shield.esm.js",
   "keywords": [
     "Next.js",
@@ -71,10 +71,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/imjulianeral/next-shield.git"
+    "url": "https://github.com/Esaud17/next-shield.git"
   },
   "bugs": {
-    "url": "https://github.com/imjulianeral/next-shield/issues"
+    "url": "https://github.com/Esaud17/next-shield/issues"
   },
   "homepage": "https://imjulianeral.github.io/next-shield/",
   "config": {
